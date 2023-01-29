@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Like Button: class type</title>    
+    <!-- <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+</head>
+<body>
+  <div id="root"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.js"></script> -->
+  <!-- <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.js"></script> -->
+  
+  <script> // Component 영역
+    'use strict';
+
+    class Basic extends React.Component {
+      // Data 형태
+      constructor(props) { // 생성자
+        super(props); // 초기화
+        this.state = {}; // 실행
+      }  
+      // 화면 형태
+      render() {        
+        return React.createElement(
+          'event-handling', {function: () => this.setState({})}, 'Result'
+          );
+      }
+    }
+  </script>
+  <script> // 화면에 그리는 영역
+    ReactDOM.render(React.createElement(Basic), document.querySelector('#root'));
+  </script>
+
+</body>
+</html>
