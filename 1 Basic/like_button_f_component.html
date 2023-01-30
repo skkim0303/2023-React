@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Like Button: class component를 function component로</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.js"></script> -->
+    <!-- <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      "use strict";
+
+      // 함수 Component 형으로 만들기, this쓸일이 없다
+      function LikeButton() {
+        // likeButton은 Data, setLikeButton은 Data를 바꾸는 함수        
+        const [likeButton, setLikeButton] = React.useState(false);
+        if (likeButton) {
+          return 'VERY NICE!';
+        }
+        return (
+          <button onClick = { ()=> {setLikeButton(true);} }>좋아요</button>
+        );
+      }    
+      
+      // 같은 화면에서 바뀌는 것이 state라고 감을 잡아야 한다
+      
+    </script>
+    <script type="text/babel">
+      
+      // React 18버전
+      ReactDOM.createRoot(document.querySelector('#root')).render(<LikeButton />);
+
+    </script>
+  </body>
+</html>
