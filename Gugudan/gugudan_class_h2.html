@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.js"></script> -->
+    <!-- <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>구구단 게임</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // Fragment <></> 적용, prevState활용 (예전값, 미래값 같이 적용)
+      // this.state.value가 과거값이고 향후 나올 값에 적용될 경우 prevState
+      /* 작용함수
+      this.setState((prevState) => {
+        return {
+          result: '정답!' + prevState.value,
+        };
+      }); */
+
+      /* DOM에 직접 접근하려면 ref = {() => {}} 함수로 접근 
+      focus() 적용사례 참조 */
+
+      /* setState될때마다 render()에서는 계속 렌더링이 됨 (화면 새로고침이 일어남)
+      value값을 입력하는 순간에도 계속 화면 새로고침 발생
+      따라서 ref = {} 함수도 계속 생성이 되기때문에 외부에 선언이 효과적 */
+      
+      "use strict";   
+
+      class GuGuDan extends React.Component {
+        constructor(props) {
+          super(props);
+          // state 선언
+          this.state = {
+            first: Math.ceil(Math.random() * 9), //  첫번째 수
+            second: Math.ceil(Math.random() * 9), //  두번째 수
+            value: '',
+            result: '', 
+          };
+        }
+
+        onSubmit = (e) => { // 구구단 로직 적용
+          e.preventDefault();
+          if (parseInt(this.state.value) === this.state.first * this.state.second) {
+            this.setState((prevState) => {
+              return {
+                // result: `정답!: ${this.state.value}`,
+                result: '정답! ' + prevState.value,
+                first: Math.ceil(Math.random() * 9), //  첫번째 수
+                second: Math.ceil(Math.random() * 9), //  두번째 수
+                value: '',
+              };
+            });
+            this.input.focus();
+          } else {
+            this.setState({
+              result: '땡!!',
+              value: '',
+            });
+            this.input.focus();
+          }
+        }
+
+        onChange = (e) => { // 직접 입력하여 바꾸어 줄때 setState
+          this.setState({value: e.target.value});
+        }
+
+        input;
+
+        onRef = (a) => {this.input = a;};
+
+        render() {
+          return ( // Display 내용, onSubmit={}, onChange={} 둘다 함수
+            /* input창에 focus하고자 할때 ref = {() => {}} 함수만들고 
+            input; 변수 선언하고 
+            value가 입력되는 코드에 this.input.focus() 적용
+            focus()는 창에서 깜빡깜빡 거리는 효과 */
+            <>           
+              <div> {this.state.first} 곱하기 {this.state.second} 는? </div>
+              <form onSubmit = {this.onSubmit}>
+                <input ref={this.onRef} 
+                type="number" value = {this.state.value} 
+                onChange ={this.onChange} />
+                <button>입력</button>
+              </form>
+              <div> {this.state.result} </div>          
+              <div> {this.state.value} </div>          
+            </>
+          );          
+        }
+      }     
+      
+    </script>
+    <script type="text/babel">      
+      // React 18버전
+      ReactDOM.createRoot(document.querySelector('#root')).render(<GuGuDan />);
+    </script>
+  </body>
+</html>
