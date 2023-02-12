@@ -16,11 +16,52 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
+
+      const GuGuDan = () => {
+        // state 개별선언
+        const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+        const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
+        const [value, setValue] = React.useState('');
+        const [result, setResult] = React.useState('');
+        const inputRef = React.useRef();
+        
+        const onSubmitForm = (e) => {
+          e.preventDefault();
+          if (parseInt(value) === first * second) {
+            setFirst(Math.ceil(Math.random() * 9));
+            setSecond(Math.ceil(Math.random() * 9));
+            setValue('');
+            setResult('정답! ' + value);
+            // focus() 기능
+            inputRef.current.focus();
+          } else {
+            setValue('');
+            setResult('땡!');
+            inputRef.current.focus();
+          }
+        }
+
+        const onChangeInput = (e) => {
+          // input에는 value를 넣어야 하기에 
+          setValue(e.target.value);
+        }
+
+        return (
+          <>
+          <div> {first} 곱하기 {second} = ?</div>
+          <form onSubmit = {onSubmitForm}>
+            <input type="number" onChange = {onChangeInput} ref = {inputRef} value = {value}  />
+            <button>입력</button>
+          </form>
+          <div id="result"> {result}</div>
+          </>
+        );
+      }
      
       
     </script>
     <script type="text/babel">     
       ReactDOM.createRoot(document.querySelector('#root')).render(<GuGuDan />);
-    </script>
+    </script> 
   </body>
 </html>
